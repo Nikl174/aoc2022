@@ -1,16 +1,20 @@
 use std::cmp;
+use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Error};
 
 fn main() -> Result<(), Error> {
-
-    let path = "input.in";
-
+    let vars: Vec<String> = env::args().collect();
+    let path = &vars[1];
     let input = File::open(path).expect("File open error from path {path}");
     let buffered = BufReader::new(input);
-    let result = buffered.lines().fold(((0,0,0), 0), biggest_three_elfs);
+    let result = buffered.lines().fold(((0, 0, 0), 0), biggest_three_elfs);
 
-    println!("Result: {}", result.0.0+result.0.1+result.0.2);
+    println!(
+        "Maximum Inventory (part1): {}\n 3 biggest inventories (part2) {}",
+        result.0.1,
+        result.0 .0 + result.0 .1 + result.0 .2
+        );
     return Ok(());
 }
 
